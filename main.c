@@ -46,6 +46,30 @@ struct Entry createEntry (char*name, float price) {
     return item;
 } 
 
+// Prompt for user input. Will accept numbers separated by comma
+
+void userInput (struct Entry *menu) {
+    // storage object for user input:
+    char stringCache[100];
+    char *token;
+    long selection;
+    float yourTotal = 0;
+
+    // Read in user input
+    printf("Enter your choices as numbers: ");
+    scanf ("%s", stringCache);
+
+    token = strtok (stringCache, ",");
+    while (token != NULL) {
+        // Do something with the token
+        selection = strtol(token, NULL, 10);
+        printf("Selected [%lu]: %s\n", selection, menu[selection-1].mealName);
+        yourTotal += menu[selection-1].price;
+        token = strtok (NULL, ",");
+    }
+    printf("Your total is: %.2f\n", yourTotal);
+}
+
 //  MAIN MAIN MAIN
 
 int main ( ) {
@@ -64,7 +88,20 @@ int main ( ) {
     for (i = 0 ; i < (sizeof(menuArray)/sizeof(struct Entry)); ++i) {    
         printf("[%d]: %s \t $%.2f \n", i + 1, menuArray[i].mealName, menuArray[i].price);
     }
+
+    userInput(menuArray);
+    return 0;
 }
     
     
- 
+
+
+
+
+
+
+
+
+
+
+
